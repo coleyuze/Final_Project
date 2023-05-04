@@ -1,0 +1,242 @@
+export PATH="/$HOME/anaconda3/bin:$PATH"
+export PATH="$PATH:$HOME/anaconda/bin"
+
+
+VPN：
+5040072
+chendf0101
+
+/root/task2 
+/root/test20230311/task2
+C:\Users\10401\Desktop\covidV2\task2\task2\task2V2
+
+source activate base
+
+nvidia-smi
+
+Matplotlib
+
+gptapi:
+
+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
+
+dataset：
+train.tsv
+0-1319：1369- face masks
+1319-2369：1050-school closures
+2369-3556：1187-stay at home orders
+
+0-873:873-AGAINST
+873-2220:1347-FAVOR
+2220-3556:1336:NONE
+
+
+python3 bert_mlp.py
+python -m bert_mlp
+Record screen address square key +G, +G+Alt
+C:\Users\10401\Videos\Captures
+
+
+Test 1 (V2 model) uses SWA:
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --swa_start=5 --swa_lr=2e-5 --batch_size=16 --adam_epsilon=1e-6 --weight_decay=0.01 --bert_dir="digitalepidemiologylab/covid-twitter-bert-v2" --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 2（base model）uses swa：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --swa_start=5 --swa_lr=2e-5 --batch_size=16 --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 3（base model）not use SWA：64/64/16--baseline
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 4 (V2 model) not use swa：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --batch_size=16 --adam_epsilon=1e-6 --weight_decay=0.01 --bert_dir="digitalepidemiologylab/covid-twitter-bert-v2" --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+
+----------------------------------------------------------------------------------------batch size ---------------------------------------------------------------------------------------
+
+Test 5（base model）batchsize 64/64/64 epoch:5：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=5 --test_batch_size=64 --val_batch_size=64 --batch_size=64
+
+Test 6（base model）batchsize 64/64/64 epoch:10：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=10 --test_batch_size=64 --val_batch_size=64 --batch_size=64
+
+Test 7（base model）batchsize 128/128/128 epoch:10：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=10 --test_batch_size=128 --val_batch_size=128 --batch_size=128
+
+Test 8（base model）batchsize 64/32/32 epoch:10：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=10 --test_batch_size=64 --val_batch_size=32 --batch_size=32
+
+Test 9（base model）batchsize 128/128/32 epoch:10：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=10 --test_batch_size=128 --val_batch_size=128 --batch_size=32
+
+Test 10（base model）batchsize 128/64/128 epoch:10：
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --max_epochs=10 --test_batch_size=128 --val_batch_size=64 --batch_size=128
+
+Test 1 bounced back at the ninth epoch (2000step) with loss 0.199 and acc 0.875
+Test 2 implements the graph data at the final epoch (500step)
+Test 4 in the ninth epoch, 1000step rebound loss 0.162, acc 0.938
+
+----------------------------------------------------------------------------------------multiple output layers---------------------------------------------------------------------------------------
+
+
+Test 11（base model）Test the output layer -the last layer -no head：
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 12（base model）Test the output layer -the last four layer -no head：
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 13（base model）Test the output layer -the last four layer -extra head
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 14（base model）Test the output layer -the last four layer -extra head--freeze
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --embedding_freeze
+Frozen model code source:
+https://wenku.baidu.com/view/81d813c949fe04a1b0717fd5360cba1aa8118ceb.html?_wkts_=1681122185355&bdQuery=pytorch+freeze
+
+Test 15（base model）Test the output layer -the last four layer -extra head--freeze---bert_seq_length=64
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=64 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --embedding_freeze
+
+----------------------------------------------------------------------------------------bert_seq_length---------------------------------------------------------------------------------------
+
+Test 19（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----bert learning rate = 0.1--schedular
+
+Test 16（base model）Test the output layer -the last four layer -extra head--freeze---bert_seq_length（Maximum sequence length of the input）=256
+Code changes
+python -m src.train --gpu_ids='2' --bert_seq_length=256 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --embedding_freeze
+
+Test 17（base model）Test the output layer -the last four layer -extra head--不freeze---bert_seq_length=64
+python -m src.train --gpu_ids='2' --bert_seq_length=64 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+Test 18（base model）Test the output layer -the last four layer -extra head--不freeze---bert_seq_length=256
+python -m src.train --gpu_ids='2' --bert_seq_length=256 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+----------------------------------------------------------------------------------------bert learning rate---------------------------------------------------------------------------------------
+Test 19（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----bert learning rate = 0.1--schedular
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=0.1 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16
+
+Test 20（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----bert learning rate = 0.1--lr_nochange
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=0.1 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --constant_lr
+
+---------------------------------------------------------------------------------------- learning rate---------------------------------------------------------------------------------------
+Test 21（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 0.1
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=0.1 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+Test 22（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 0.1--constant_lr
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=0.1 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --constant_lr
+
+Test 23（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 0.01
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=0.01 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+
+Test 24（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 0.001
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=0.001 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+
+Test 25（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+
+Test 25-1（base model）Test the output layer -the last four layer -extra head--no freeze--不freeze---bert_seq_length=128----learning rate = 5e-5
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=5e-5 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 
+
+
+---------------------------------------------------------------------------------------- SWA---------------------------------------------------------------------------------------
+
+more：https://zhuanlan.zhihu.com/p/122504469
+Test 26（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=2e-5
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=2e-5
+
+Test 28（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=1e-4
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=1e-4
+
+Test 29（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=5e-5
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=5e-5
+
+
+---------------------------------------------------------------------------------------- focal loss---------------------------------------------------------------------------------------
+Test 27（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --gamma_focal=1
+
+---------------------------------------------------------------------------------------- EMA---------------------------------------------------------------------------------------
+
+Test 30（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=2e-5---EMA
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=2e-5 --ema_start=0 --ema_decay=0.99
+
+Test 31（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---EMA
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --ema_start=0 --ema_decay=0.99
+
+---------------------------------------------------------------------------------------- FGM-------------------------------------------------------------------------------------
+
+Test 32（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=2e-5---FGM
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=2e-5 --fgm=1
+
+---------------------------------------------------------------------------------------- PGD-----------------------------------------------------------------------------------
+
+Test 33（base model）Test the output layer -the last four layer -extra head--no freeze---bert_seq_length=128----learning rate = 1e-4---SWA=2e-5---PGD
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=2e-5 --pgd=1
+
+---------------------------------------------------------------------------------------- Covid-V2----------------------------------------------------------------------
+Test 34（V2 model）
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10  --adam_epsilon=1e-6 --weight_decay=0.01 --test_batch_size=64 --val_batch_size=64 --batch_size=16 --swa_start=5 --swa_lr=2e-5 --fgm=1 --bert_dir="digitalepidemiologylab/covid-twitter-bert-v2"
+
+Simplest startup code
+python -m src.train  --bert_seq_length=32   --learning_rate=1e-4 --bert_learning_rate=2e-5 --savedmodel_path='data/checkpoint/0708_ema_4_stance_twitter_emb_freeze' --max_epochs=1  --ema_start=-1   --fgm=0  --bert_dir="digitalepidemiologylab/covid-twitter-bert-v2"
+
+number2： 
+python -m src.train --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --swa_start=5 --swa_lr=2e-5 --bert_dir="digitalepidemiologylab/covid-twitter-bert-v2" --gpu_ids='2'
+
+python -m src.train --bert_seq_length=256 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --swa_start=5 --swa_lr=2e-5 --bert_dir="digitalepidemiologylab/covid-twitter-bert" --gpu_ids='2'
+
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=2e-5 --savedmodel_path='data/checkpoint/0708_ema_11_fgm_stance_twitter' --max_epochs=4 --ema_start=0 --ema_decay=0.99 --fgm=1 --bert_dir="digitalepidemiologylab/covid-twitter-bert"
+
+readme test1： 
+python -m src.train
+--gpu_ids='2'
+--bert_seq_length=128
+--learning_rate=1e-4
+--bert_learning_rate=5e-5
+--savedmodel_path='data/checkpoint/0703_swa_10'
+--max_epochs=10
+--swa_start=5
+--swa_lr=2e-5
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_swa_10' --max_epochs=10 --swa_start=5 --swa_lr=2e-5
+
+test2: python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=5e-5 --savedmodel_path='data/checkpoint/0703_ema_10_128_fgm' --max_epochs=10 --ema_start=0 --ema_decay=0.99 --bert_dir="digitalepidemiologylab/covid-twitter-bert"
+
+Continuing and training the model: 
+python -m src.train --gpu_ids='2' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=2e-5 --savedmodel_path='data/checkpoint/0706_ema_11_fgm_stance_large_pre' --max_epochs=11 --ema_start=0 --ema_decay=0.99 --fgm=1 --bert_dir="digitalepidemiologylab/covid-twitter-bert" --pretrain_model_path="data/pretrain_mlm_nsp/model_epoch_8_loss_1.8660_1998.bin"
+
+python -m src.train --gpu_ids='0' --bert_seq_length=128 --learning_rate=1e-4 --bert_learning_rate=2e-5 --savedmodel_path='data/checkpoint/0706_ema_11_fgm_stance_large_pre' --max_epochs=1 --ema_start=-1 --fgm=0 --bert_dir="roberta-large" --pretrain_model_path="data/pretrain_mlm_nsp/model_epoch_8_loss_1.8660_1998.bin"
+
+Steps to run the code:
+
+dataset_ft.py==FinetuneDataset
+basetrain.py==inter Basetrainer
+finetune.py==FTmodel
+finetune.py==AttentionHead
+train.py==Loading configuration data
+The GPUS ids:  0
+basetrain.py==Base Trainer class==init
+basetrain.py==Base Trainer class==setEverything
+FTtrianer.py==getmodel
+
+FTtrianer.py==get_dataloader
+dataset_ft.py==create data loaders
+dataset_ft.py==Initialization FinetuneDataset(Dataset)==init
+dataset_ft.py==Initialization FinetuneDataset(Dataset)==init
+The train data length:  222
+The valid data length:  10
+basetrain.py==Base Trainer class==resume
+
+FTtrianer.py==init
+train.py==Enter FT Trianer
+basetrian.py==train method
+basetrain.py==train method==start loop
+
+dataset_ft.py==get item
+finetune.py==forward
+finetune.py==cal_loss
+basetrain.py==validate

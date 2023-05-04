@@ -1,0 +1,62 @@
+Xshell 7 (Build 0122)
+Copyright (c) 2020 NetSarang Computer, Inc. All rights reserved.
+
+Type `help' to learn how to use Xshell prompt.
+[C:\~]$ 
+
+Connecting to 121.48.161.243:8024...
+Connection established.
+To escape to local shell, press 'Ctrl+Alt+]'.
+
+WARNING! The remote SSH server rejected X11 forwarding request.
+Last login: Wed Mar 29 09:55:57 2023 from 202.112.14.6
+root@9cf9c6d4615a:~# cd /root/stance_detection/stance_detection
+root@9cf9c6d4615a:~/stance_detection/stance_detection# python -m bert_mlp
+epoch:0			steps:100			loss:1.007456			f1_score:0.4630
+epoch:0			steps:200			loss:0.909744			f1_score:0.5807
+dev
+f1:0.285063		loss:0.091425
+save best model		f1:0.285063		loss:0.091425
+epoch:1			steps:300			loss:1.065873			f1_score:0.4778
+epoch:1			steps:400			loss:0.629462			f1_score:0.8607
+dev
+f1:0.595666		loss:0.048745
+save best model		f1:0.595666		loss:0.048745
+epoch:2			steps:500			loss:0.585231			f1_score:0.7232
+epoch:2			steps:600			loss:0.443306			f1_score:0.8471
+dev
+f1:0.587714		loss:0.046883
+epoch:3			steps:700			loss:0.195283			f1_score:1.0000
+epoch:3			steps:800			loss:0.547183			f1_score:0.8030
+dev
+f1:0.607957		loss:0.042891
+save best model		f1:0.607957		loss:0.042891
+epoch:4			steps:900			loss:0.410512			f1_score:0.8376
+epoch:4			steps:1000			loss:0.606263			f1_score:0.7852
+epoch:4			steps:1100			loss:0.303486			f1_score:0.9267
+dev
+f1:0.600680		loss:0.045420
+epoch:5			steps:1200			loss:0.238612			f1_score:0.8889
+epoch:5			steps:1300			loss:0.224560			f1_score:0.9153
+dev
+f1:0.587392		loss:0.051249
+epoch:6			steps:1400			loss:0.154701			f1_score:0.9327
+epoch:6			steps:1500			loss:0.058527			f1_score:1.0000
+dev
+f1:0.605697		loss:0.050021
+epoch:7			steps:1600			loss:0.116338			f1_score:0.9521
+epoch:7			steps:1700			loss:0.236504			f1_score:0.9501
+dev
+f1:0.607809		loss:0.051602
+epoch:8			steps:1800			loss:0.034255			f1_score:1.0000
+epoch:8			steps:1900			loss:0.040183			f1_score:1.0000
+epoch:8			steps:2000			loss:0.087915			f1_score:1.0000
+dev
+f1:0.595830		loss:0.053958
+epoch:9			steps:2100			loss:0.065847			f1_score:1.0000
+epoch:9			steps:2200			loss:0.364107			f1_score:0.9521
+dev
+f1:0.600894		loss:0.053704
+Training time: 737.9797344207764
+dev
+f1:0.607957		loss:0.042891

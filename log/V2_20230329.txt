@@ -1,0 +1,11 @@
+﻿[BEGIN] 29/03/2023 21.51.51
+
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
+
+Connection closed by foreign host.
+
+Disconnected from remote host(Project) at 12:48:44.
+
+Type `help' to learn how to use Xshell prompt.
+[K[1;32m[C:\~]$ [m
